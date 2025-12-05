@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us – Global Exchange</title>
+  <link rel="stylesheet" href="contact.css"/>
+  <script defer src="contact.js"></script>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="main-nav">
+    <div class="nav-left">
+      <img src="images/logo.png" alt="Global Exchange Logo" class="nav-logo"/>
+      <span class="nav-title">GLOBAL EXCHANGE</span>
+    </div>
+      <nav class="nav-links">
+        <a href="#" onclick="navigateProtected('exchange.html')" class="btn nav-btn">Currency Exchange</a>
+        <a href="#" onclick="navigateProtected('payment.html')" class="btn nav-btn">Make a Payment</a>
+        <a id="btn-login" href="login.html" class="btn nav-btn">Log-In</a>
+        <a id="btn-signup" href="signup.html" class="btn nav-btn">Create Account</a>
+        <a id="btn-contact" href="contact.html" class="btn nav-btn">Contact</a>
+        <a id="btn-about" href="about.html" class="btn nav-btn">About</a>
+        <a id="btn-faq" href="faq.html" class="btn nav-btn">FAQ</a>
+        <a id="btn-profile" href="#" class="btn nav-btn">Profile</a>
+      </nav>
+
+  </header>
+
+  <!-- CONTACT FORM -->
+  <main class="contact-container">
+    <div class="contact-card">
+      <h1>Contact Us</h1>
+      <p class="subtitle">Have questions? We’d love to hear from you.</p>
+      <form id="contact-form" novalidate>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Your name" required/>
+          <div class="error" id="error-name"></div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="you@example.com" required/>
+          <div class="error" id="error-email"></div>
+        </div>
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" placeholder="Subject" required/>
+          <div class="error" id="error-subject"></div>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" rows="5" placeholder="Your message..." required></textarea>
+          <div class="error" id="error-message"></div>
+        </div>
+        <button type="submit" class="btn primary" id="send-btn">
+          <span class="btn-text">Send Message</span>
+          <span class="spinner" id="send-spinner"></span>
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <!-- CHATBOT OPEN BUTTON -->
+  <button id="chatbot-open-btn" class="chatbot-open-btn">Chat</button>
+
+  <!-- CHATBOT MODAL -->
+  <div id="chatbot-modal" class="chatbot-modal">
+    <div class="chatbot-modal-content">
+      <button id="chatbot-close-btn" class="chatbot-close-btn">&times;</button>
+      <div id="chatbot-container">
+        <!-- Buraya widget kodunuzu ekleyin -->
+        <p>Chatbot loading…</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2025 Global Exchange. All rights reserved.</p>
+  </footer>
+
+  <!-- THEME TOGGLE -->
+  <div class="theme-switch-wrapper">
+    <label class="theme-switch" for="theme-checkbox">
+      <input type="checkbox" id="theme-checkbox"/>
+      <div class="switch-slider"></div>
+    </label>
+    <span id="mode-text">Dark</span>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const buttons = {
+        profile: document.getElementById('btn-profile'),
+        payment: document.getElementById('btn-payment'),
+        exchange: document.getElementById('btn-exchange')
+      };
+
+      Object.entries(buttons).forEach(([key, btn]) => {
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const token = localStorage.getItem('token');
+          if (!token) {
+            window.location.href = 'login.html';
+          } else {
+            window.location.href = `${key}.html`;
+          }
+        });
+      });
+    });
+  </script>
+  <script>
+  function navigateProtected(path) {
+    const token = localStorage.getItem('token');
+    if (token) {
+      window.location.href = path;
+    } else {
+      alert('You must be logged in to access this page.');
+      window.location.href = 'login.html';
+    }
+  }
+  </script>
+
+</body>
+</html>

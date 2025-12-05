@@ -1,0 +1,181 @@
+/* ===================================
+   CONTACT PAGE STYLES (contact.css)
+   =================================== */
+
+   :root {
+    --nav-bg: #16213e;
+    --btn-primary: #2d9cdb;
+    --text-main: #fff;
+    --text-sub: #ccc;
+    --card-bg: rgba(22,33,62,0.7);
+    --bg-img: url('images/background.jpg') center/cover fixed;
+  }
+  body.light-mode {
+    --nav-bg: #f0f0f0;
+    --text-main: #111;
+    --text-sub: #333;
+    --card-bg: rgba(255,255,255,0.9);
+  }
+  
+  /* RESET & LAYOUT */
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    display:flex; flex-direction:column; min-height:100vh;
+    font-family:Georgia, serif;
+    background: var(--bg-img);
+    color: var(--text-main);
+    transition: background .3s, color .3s;
+  }
+  
+  /* NAVBAR */
+  .main-nav {
+    display:flex; align-items:center; justify-content:space-between;
+    background:var(--nav-bg); padding:12px 24px;
+    position:sticky; top:0; z-index:1000;
+  }
+  .nav-left { display:flex; align-items:center; gap:8px; }
+  .nav-logo { width:36px; height:36px; }
+  .nav-title { color:var(--text-main); font-size:20px; font-weight:bold; }
+  .nav-links { display:flex; gap:12px; }
+  .nav-links .nav-btn {
+    background:var(--btn-primary); color:#fff;
+    text-decoration:none; padding:8px 14px; border-radius:6px;
+    font-size:14px; transition:background .2s;
+  }
+  .nav-links .nav-btn:hover,
+  .nav-links .active { background:#1b7bbf; }
+  
+  /* CONTACT FORM */
+  .contact-container {
+    flex:1; display:flex; justify-content:center; padding:60px 16px;
+  }
+  .contact-card {
+    background: var(--card-bg);
+    padding: 40px 30px; border-radius:12px;
+    max-width:500px; width:100%;
+    backdrop-filter:blur(8px);
+  }
+  .contact-card h1 {
+    text-align:center; font-size:28px; margin-bottom:8px;
+    color: var(--btn-primary);
+  }
+  .subtitle {
+    text-align:center; font-size:14px; margin-bottom:24px;
+    color: var(--text-sub);
+  }
+  .form-group { margin-bottom:20px; }
+  .form-group label {
+    display:block; margin-bottom:6px;
+    color: var(--text-main); font-size:14px;
+  }
+  .form-group input,
+  .form-group textarea {
+    width:100%; padding:10px 12px; font-size:16px;
+    border:none; border-radius:6px;
+    background: var(--card-bg); color: var(--text-main);
+    transition: background .3s, color .3s;
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: var(--text-sub);
+  }
+  .error {
+    font-size:13px; color:#e74c3c;
+    min-height:16px; margin-top:4px;
+  }
+  
+  /* BUTTON & SPINNER */
+  .btn {
+    display:inline-flex; align-items:center; justify-content:center;
+    gap:8px; padding:10px; border:none; border-radius:6px;
+    font-size:16px; cursor:pointer; position:relative;
+  }
+  .btn.primary {
+    background: var(--btn-primary); color:#fff; width:100%;
+  }
+  .btn.primary:hover { filter:brightness(1.1); }
+  .spinner {
+    display:none; width:16px; height:16px;
+    border:2px solid rgba(255,255,255,0.6);
+    border-top-color:#fff; border-radius:50%;
+    animation:spin 1s linear infinite;
+  }
+  #send-btn.loading .btn-text { visibility:hidden; }
+  #send-btn.loading .spinner {
+    display:inline-block; position:absolute;
+  }
+  @keyframes spin { to{transform:rotate(360deg);} }
+  
+  /* CHAT BUTTON */
+  .chatbot-open-btn {
+    position: fixed;
+    left: 0; top: 50%;
+    transform: translateY(-50%);
+    background: var(--btn-primary);
+    color: #fff;
+    border: none;
+    padding: 12px 16px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    cursor: pointer;
+    z-index: 1001;
+    font-size: 14px;
+  }
+  
+  /* CHATBOT MODAL */
+  .chatbot-modal {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.6);
+    align-items: center; justify-content: center;
+    z-index: 1000;
+  }
+  .chatbot-modal-content {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    backdrop-filter: blur(8px);
+    text-align: center;
+  }
+  .chatbot-close-btn {
+    position: absolute; top: 8px; right: 12px;
+    background: none; border: none;
+    font-size: 24px; color: var(--text-main);
+    cursor: pointer;
+  }
+  
+  /* FOOTER */
+  footer {
+    background:var(--nav-bg);
+    text-align:center; padding:20px 0;
+    color:var(--text-sub); font-size:14px;
+    position:static;
+  }
+  
+  /* THEME TOGGLE */
+  .theme-switch-wrapper {
+    position:fixed; bottom:20px; right:20px;
+    display:flex; align-items:center; gap:8px;
+    color:var(--text-main); font-size:14px; z-index:1001;
+  }
+  .theme-switch { position:relative; width:50px; height:24px; }
+  .theme-switch input { opacity:0; width:0; height:0; }
+  .switch-slider {
+    position:absolute; inset:0;
+    background:#ccc; border-radius:24px; transition:.4s;
+  }
+  .switch-slider::before {
+    content:""; position:absolute;
+    width:18px; height:18px; left:3px; bottom:3px;
+    background:#fff; border-radius:50%; transition:.4s;
+  }
+  .theme-switch input:checked + .switch-slider {
+    background: var(--btn-primary);
+  }
+  .theme-switch input:checked + .switch-slider::before {
+    transform: translateX(26px);
+  }
+  

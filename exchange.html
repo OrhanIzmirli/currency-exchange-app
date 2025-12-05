@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Currency Exchange – Global Exchange</title>
+  <link rel="stylesheet" href="exchange.css">
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="main-nav">
+    <div class="nav-left">
+      <img src="images/logo.png" alt="Global Exchange logo" class="nav-logo">
+      <span class="nav-title">GLOBAL EXCHANGE</span>
+    </div>
+    <nav class="nav-links">
+      <a href="#" onclick="navigateProtected('exchange.html')" class="btn nav-btn">Currency Exchange</a>
+      <a href="#" onclick="navigateProtected('payment.html')" class="btn nav-btn">Make a Payment</a>
+      <a id="btn-login" href="login.html" class="btn nav-btn">Log-In</a>
+      <a id="btn-signup" href="signup.html" class="btn nav-btn">Create Account</a>
+      <a id="btn-contact" href="contact.html" class="btn nav-btn">Contact</a>
+      <a id="btn-about" href="about.html" class="btn nav-btn">About</a>
+      <a id="btn-faq" href="faq.html" class="btn nav-btn">FAQ</a>
+      <a id="btn-profile" href="#" class="btn nav-btn">Profile</a>
+    </nav>
+  </nav>
+
+  <!-- Container added to fix layout -->
+  <div class="container">
+    <!-- EXCHANGE FORM -->
+    <main class="payment-container exchange-container">
+      <div class="payment-card exchange-card">
+        <h1>Currency Exchange</h1>
+        <p class="subtitle">Quickly convert between currencies</p>
+
+        <form id="exchange-form">
+          <div class="form-row">
+            <div class="form-group small">
+              <label for="fromCurrency">From</label>
+              <select id="fromCurrency" name="fromCurrency">
+                <option value="USD">USD – US Dollar</option>
+                <option value="EUR">EUR – Euro</option>
+                <option value="GBP">GBP – British Pound</option>
+                <option value="TRY">TRY – Turkish Lira</option>
+                <option value="PLN">PLN – Polish Zloty</option>
+              </select>
+            </div>
+            <div class="form-group small">
+              <label for="toCurrency">To</label>
+              <select id="toCurrency" name="toCurrency">
+                <option value="EUR">EUR – Euro</option>
+                <option value="USD">USD – US Dollar</option>
+                <option value="GBP">GBP – British Pound</option>
+                <option value="TRY">TRY – Turkish Lira</option>
+                <option value="PLN">PLN – Polish Zloty</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="amount">Amount</label>
+            <input type="number" id="amount" name="amount" step="0.01" placeholder="0.00" required>
+          </div>
+
+          <button type="submit" class="btn primary" id="convert-btn">
+            <span class="btn-text">Convert</span>
+            <div class="spinner"></div>
+          </button>
+        </form>
+
+        <div id="result" class="subtitle" style="margin-top:24px;"></div>
+
+        <!-- Döviz Kurları -->
+        <section id="rates" style="margin-top: 32px;">
+          <h2>Current Exchange Rates</h2>
+          <ul id="rate-list"></ul>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- WALLET (CÜZDAN) -->
+  <div id="wallet-section">
+    <h3>Wallet</h3>
+    <ul id="wallet-list">
+      <li>Yükleniyor...</li>
+    </ul>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Global Exchange. All rights reserved.
+  </footer>
+
+  <!-- Tema Toggle -->
+  <div class="theme-switch-wrapper">
+    <label class="theme-switch">
+      <input type="checkbox" id="theme-toggle">
+      <span class="switch-slider"></span>
+    </label>
+    <em id="theme-label">Dark Mode</em>
+  </div>
+
+  <!-- Scriptler -->
+  <script src="exchange.js"></script>
+
+  <!-- Wallet Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const userId = parseInt(localStorage.getItem('user_id'));
+      const walletList = document.getElementById('wallet-list');
+
+      try {
+        const response = await fetch(`/api/wallet?user_id=${userId}`, {
+          headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        });
+        const data = await response.json();
+        walletList.innerHTML = '';
+
+        if (data.length === 0) {
+          walletList.innerHTML = '<li>No currencies available</li>';
+        } else {
+          data.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = `${item.currency}: ${item.amount}`;
+            walletList.appendChild(li);
+          });
+        }
+      } catch (err) {
+        walletList.innerHTML = '<li>Hata oluştu</li>';
+      }
+    });
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const buttons = {
+        profile: document.getElementById('btn-profile'),
+        payment: document.getElementById('btn-payment'),
+        exchange: document.getElementById('btn-exchange')
+      };
+
+      Object.entries(buttons).forEach(([key, btn]) => {
+        if (!btn) return;
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const token = localStorage.getItem('token');
+          if (!token) {
+            window.location.href = 'login.html';
+          } else {
+            window.location.href = `${key}.html`;
+          }
+        });
+      });
+    });
+
+    function navigateProtected(path) {
+      const token = localStorage.getItem('token');
+      if (token) {
+        window.location.href = path;
+      } else {
+        alert('You must be logged in to access this page.');
+        window.location.href = 'login.html';
+      }
+    }
+  </script>
+</body>
+</html>

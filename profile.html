@@ -1,0 +1,98 @@
+<!-- profile.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile - Global Exchange</title>
+  <link rel="stylesheet" href="main.css" />
+  <link rel="stylesheet" href="profile.css" />
+  <script defer src="profile.js"></script>
+</head>
+<body>
+  <div class="theme-switch-wrapper">
+    <label class="theme-switch" for="theme-checkbox">
+      <input type="checkbox" id="theme-checkbox" />
+      <div class="switch-slider"></div>
+    </label>
+    <span id="mode-text">Dark</span>
+  </div>
+
+  <div class="container">
+    <header>
+      <div class="logo">
+        <img src="images/logo.png" alt="Global Exchange Logo" />
+        <span>GLOBAL EXCHANGE</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#" onclick="navigateProtected('exchange.html')" class="btn nav-btn">Currency Exchange</a>
+        <a href="#" onclick="navigateProtected('payment.html')" class="btn nav-btn">Make a Payment</a>
+        <a id="btn-login" href="login.html" class="btn nav-btn">Log-In</a>
+        <a id="btn-signup" href="signup.html" class="btn nav-btn">Create Account</a>
+        <a id="btn-contact" href="contact.html" class="btn nav-btn">Contact</a>
+        <a id="btn-about" href="about.html" class="btn nav-btn">About</a>
+        <a id="btn-faq" href="faq.html" class="btn nav-btn">FAQ</a>
+        <a id="btn-profile" href="#" class="btn nav-btn">Profile</a>
+        <a id="btn-logout" href="#" class="btn nav-btn">Log Out</a>
+
+      </nav>
+    </header>
+
+    <main class="profile-main">
+      <h2 class="section-title">Profile Settings</h2>
+
+      <div class="feature-card">
+        <h3>Choose Avatar</h3>
+        <button onclick="openModal()">Select Avatar</button>
+        <img id="avatar-preview" src="" alt="Selected Avatar"
+             style="display:none; width:60px; height:60px; border-radius:50%; margin-left:10px;">
+      </div>
+
+      <div class="feature-card">
+        <h3>Profile Info</h3>
+        <input type="text" id="fullName" placeholder="Full Name">
+        <input type="email" id="email" placeholder="Email">
+      </div>
+
+      <div class="feature-card">
+        <h3>Change Password</h3>
+        <input type="password" id="oldPassword" placeholder="Old Password">
+        <input type="password" id="newPassword" placeholder="New Password">
+        <button onclick="changePassword()">Update Password</button>
+      </div>
+
+      <div class="feature-card danger">
+        <h3>Danger Zone</h3>
+        <button onclick="deleteProfile()">Delete Profile</button>
+      </div>
+    </main>
+  </div>
+
+  <!-- Avatar Modal -->
+  <div id="avatarModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <h3>Select Your Avatar</h3>
+      <div class="avatar-grid">
+        <img src="images/av1.jpg" class="avatar-option" onclick="selectAvatar('av1.jpg')">
+        <img src="images/av2.jpg" class="avatar-option" onclick="selectAvatar('av2.jpg')">
+        <img src="images/av3.jpg" class="avatar-option" onclick="selectAvatar('av3.jpg')">
+        <img src="images/av4.jpg" class="avatar-option" onclick="selectAvatar('av4.jpg')">
+        <img src="images/av5.jpg" class="avatar-option" onclick="selectAvatar('av5.jpg')">
+      </div>
+    </div>
+  </div>
+
+  <script>
+  function navigateProtected(path) {
+    const token = localStorage.getItem('token');
+    if (token) {
+      window.location.href = path;
+    } else {
+      alert('You must be logged in to access this page.');
+      window.location.href = 'login.html';
+    }
+  }
+  </script>
+</body>
+</html>

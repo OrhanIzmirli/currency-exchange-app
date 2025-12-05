@@ -1,0 +1,222 @@
+/* ===================================
+   SIGNUP PAGE STYLES (signup.css)
+   =================================== */
+
+/* THEME TOGGLE */
+.theme-switch-wrapper {
+  position: fixed; bottom: 20px; right: 20px;
+  display: flex; align-items: center; gap: 8px;
+  color: var(--text-main); font-size: 14px; z-index: 1000;
+}
+.theme-switch {
+  position: relative; width: 50px; height: 24px;
+}
+.theme-switch input {
+  opacity: 0; width: 0; height: 0;
+}
+.switch-slider {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: #ccc; border-radius: 24px; transition: 0.4s;
+}
+.switch-slider::before {
+  content: ""; position: absolute;
+  width: 18px; height: 18px; left: 3px; bottom: 3px;
+  background: #fff; border-radius: 50%; transition: 0.4s;
+}
+.theme-switch input:checked + .switch-slider {
+  background: var(--btn-primary);
+}
+.theme-switch input:checked + .switch-slider::before {
+  transform: translateX(26px);
+}
+
+/* COLOR VARIABLES */
+:root {
+  --bg-body: url('images/background.jpg') center/cover fixed;
+  --overlay-bg: rgba(0,0,0,0.6);
+  --card-bg: rgba(255,255,255,0.1);
+  --text-main: #fff;
+  --text-sub: #ccc;
+  --input-bg: rgba(255,255,255,0.9);
+  --input-text: #111;
+  --btn-primary: #2d9cdb;
+  --btn-fb: #4267B2;
+  --btn-google-text: #444;
+}
+body.light-mode {
+  --overlay-bg: rgba(255,255,255,0.6);
+  --card-bg: rgba(255,255,255,0.9);
+  --text-main: #111;
+  --text-sub: #333;
+}
+
+/* RESET & BODY */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: Georgia, serif;
+  background: var(--bg-body); color: var(--text-main);
+  min-height: 100vh; position: relative;
+  transition: background .3s, color .3s;
+}
+
+/* TOAST */
+#toast {
+  position: fixed; top:20px; left:50%;
+  transform: translateX(-50%);
+  background: var(--btn-primary); color:#fff;
+  padding:10px 20px; border-radius:6px;
+  display:none; z-index:1001;
+  animation: fadein .3s, fadeout .3s 2.7s;
+}
+@keyframes fadein { from{opacity:0;} to{opacity:1;} }
+@keyframes fadeout { from{opacity:1;} to{opacity:0;} }
+
+/* CONTAINER & CARD */
+.login-container {
+  position: fixed; inset:0;
+  background: var(--overlay-bg);
+  display: flex; align-items:center; justify-content:center;
+  transition: background .3s; overflow-y:auto;
+}
+.login-card {
+  background: var(--card-bg);
+  padding:40px 30px; margin-top:40px;
+  border-radius:12px; max-width:340px; width:90%;
+  text-align:center; backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  transition: background .3s, color .3s;
+}
+
+/* LOGO & HEADINGS */
+.card-logo { margin-bottom:20px; }
+.card-logo img { width:60px; height:60px; object-fit:contain; }
+.login-card h2 {
+  font-size:24px; margin-bottom:8px;
+  color: var(--text-main);
+}
+.subtitle {
+  font-size:14px; margin-bottom:24px;
+  color: var(--text-sub);
+}
+
+/* FORM */
+.login-form { display:flex; flex-direction:column; }
+.form-group { margin-bottom:20px; text-align:left; }
+
+/* Inputs */
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+  width:100%; padding:10px 12px;
+  border:none; border-radius:6px; font-size:16px;
+  background:var(--input-bg); color:var(--input-text);
+  transition: background .3s, color .3s;
+}
+.form-group input::placeholder {
+  color: var(--text-sub); opacity:1;
+}
+.error {
+  min-height:16px; font-size:13px; margin-top:4px;
+  color:#e74c3c;
+}
+
+/* SHOW/HIDE PASSWORD */
+.password-wrapper { position:relative; }
+.password-wrapper button {
+  position:absolute; top:50%; right:10px;
+  transform:translateY(-50%);
+  background:none; border:none;
+  color: var(--btn-primary); cursor:pointer;
+}
+
+/* TERMS & NEWSLETTER */
+.terms, .newsletter {
+  display:flex; align-items:center; gap:6px;
+  font-size:14px; color: var(--text-main);
+}
+.terms a {
+  color: var(--btn-primary); text-decoration:none;
+}
+.terms a:hover { text-decoration:underline; }
+
+/* BUTTONS & SPINNER */
+.btn {
+  display:inline-flex; align-items:center; justify-content:center;
+  gap:8px; padding:10px; border:none; border-radius:6px;
+  font-size:16px; cursor:pointer; transition: filter .2s;
+  width:100%;
+}
+.btn.primary {
+  background: var(--btn-primary); color:#fff;
+}
+.btn.primary:hover { filter:brightness(1.1); }
+.spinner {
+  display:none; width:16px; height:16px;
+  border:2px solid rgba(255,255,255,0.6);
+  border-top-color:#fff; border-radius:50%;
+  animation:spin 1s linear infinite;
+}
+#signup-btn.loading .btn-text { visibility:hidden; }
+#signup-btn.loading .spinner {
+  display:inline-block; position:absolute;
+}
+@keyframes spin { to{transform:rotate(360deg);} }
+
+/* DIVIDER & SOCIAL */
+.divider {
+  margin:24px 0; position:relative; text-align:center;
+}
+.divider::before,.divider::after {
+  content:""; position:absolute; top:50%;
+  width:40%; height:1px; background:#ccc;
+}
+.divider::before { left:0; } .divider::after { right:0; }
+.divider span {
+  background: var(--overlay-bg); padding:0 8px;
+  font-size:14px; color: var(--text-sub);
+}
+.social-login {
+  display:flex; flex-direction:column; gap:12px;
+}
+.social-login .btn.fb {
+  background: var(--btn-fb); color:#fff;
+}
+.social-login .btn.google {
+  background:#fff; color: var(--btn-google-text);
+}
+.social-login img { width:20px; height:20px; }
+
+/* SIGNUP LINK */
+.signup-link {
+  margin-top:20px; font-size:14px; color: var(--text-main);
+}
+.signup-link a {
+  color: var(--btn-primary); text-decoration:none;
+}
+.signup-link a:hover { text-decoration:underline; }
+
+/* TERMS MODAL */
+#terms-modal {
+  position:fixed; inset:0;
+  background: rgba(0,0,0,0.8);
+  display:none; align-items:center; justify-content:center;
+  z-index:1000;
+}
+#terms-modal .modal-content {
+  background: var(--card-bg);
+  padding:20px; border-radius:8px;
+  width:90%; max-width:500px;
+  color: var(--text-main);
+  position:relative;
+  animation:fadeInModal .3s ease-out;
+}
+#terms-modal .close-modal {
+  position:absolute; top:8px; right:12px;
+  background:none; border:none;
+  font-size:24px; color: var(--text-main);
+  cursor:pointer;
+}
+@keyframes fadeInModal {
+  from { transform:translateY(-20px); opacity:0; }
+  to   { transform:translateY(0); opacity:1; }
+}

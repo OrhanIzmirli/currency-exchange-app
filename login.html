@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login – Global Exchange</title>
+  <link rel="stylesheet" href="login.css" />
+  <script defer src="login.js"></script>
+</head>
+<body>
+  <!-- Tema Toggle -->
+  <div class="theme-switch-wrapper">
+    <label class="theme-switch" for="theme-checkbox">
+      <input type="checkbox" id="theme-checkbox" />
+      <div class="switch-slider"></div>
+    </label>
+    <span id="mode-text">Dark</span>
+  </div>
+
+  <div class="login-container">
+    <div class="login-card">
+      <!-- Logo -->
+      <div class="card-logo">
+        <img src="images/logo.png" alt="Global Exchange Logo">
+      </div>
+
+      <h2>Welcome Back</h2>
+      <p class="subtitle">Please login to access your account.</p>
+
+      <form id="login-form" class="login-form" novalidate>
+        <!-- Username -->
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            placeholder="Username"
+            required
+          />
+          <div class="error" id="username-error"></div>
+        </div>
+
+        <!-- Password + Show/Hide -->
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="password-wrapper">
+            <input
+              type="password"
+              id="password"
+              placeholder="Password"
+              required
+              minlength="8"
+            />
+            <button type="button" id="toggle-password" aria-label="Show password">Show</button>
+          </div>
+          <div class="error" id="password-error"></div>
+        </div>
+
+        <!-- Remember + Forgot -->
+        <div class="form-extra">
+          <label class="remember">
+            <input type="checkbox" id="remember" />
+            Remember me
+          </label>
+          <a href="#" class="forgot">Forgot password?</a>
+        </div>
+
+        <!-- Login Button + Spinner -->
+        <button type="submit" class="btn primary" id="login-btn">
+          <span class="btn-text">Log In</span>
+          <span class="spinner" id="spinner"></span>
+        </button>
+      </form>
+
+      <div class="divider"><span>or</span></div>
+
+      <!-- Social Logins -->
+      <div class="social-login">
+        <button class="btn fb">
+          <img src="images/facebook.png" alt="Facebook logo" />
+          Continue with Facebook
+        </button>
+        <button class="btn google">
+          <img src="images/google.png" alt="Google logo" />
+          Continue with Google
+        </button>
+      </div>
+
+      <p class="signup-link">
+        Don’t have an account?
+        <a href="signup.html">Sign Up</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- 
+    [BACKEND ENTEGRASYONU]
+    Bu script kullanıcı giriş bilgilerini backend'deki 
+    POST /api/auth/login endpoint'ine gönderir ve JWT token alır.
+    Giriş başarılı olursa token localStorage'da saklanır.
+    Bağlantılı dosya: backend/controllers/authController.js
+  -->
+  <script>
+    document.getElementById('login-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          localStorage.setItem('token', data.token); // JWT token'ı sakla
+          alert('Login successful');
+          window.location.href = 'main.html'; // Giriş sonrası yönlendirme
+        } else {
+          alert(data.message || 'Login failed');
+        }
+      } catch (err) {
+        alert('An error occurred during login');
+      }
+    });
+  </script>
+</body>
+</html>

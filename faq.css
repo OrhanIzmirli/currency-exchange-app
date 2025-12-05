@@ -1,0 +1,178 @@
+/* ===================================
+   FAQ PAGE STYLES (faq.css)
+   =================================== */
+
+/* -----------------------------------
+   COLOR VARIABLES
+----------------------------------- */
+:root {
+    --nav-bg: #16213e;
+    --btn-primary: #2d9cdb;
+    --text-main: #fff;
+    --text-sub: #ccc;
+    --overlay-bg: rgba(10,15,45,0.3);
+  }
+  body.light-mode {
+    --nav-bg: #f0f0f0;
+    --btn-primary: #2d9cdb;
+    --text-main: #111;
+    --text-sub: #333;
+    --overlay-bg: rgba(255,255,255,0.6);
+  }
+  
+  /* -----------------------------------
+     RESET & BODY
+  ----------------------------------- */
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: Georgia, serif;
+    background: url('images/background.jpg') center/cover fixed;
+    color: var(--text-main);
+    min-height: 100vh;
+    transition: background .3s, color .3s;
+  }
+  
+  /* -----------------------------------
+     NAVBAR
+  ----------------------------------- */
+  .main-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--nav-bg);
+    padding: 12px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-logo {
+    width: 36px;
+    height: 36px;
+  }
+  .nav-title {
+    color: var(--text-main);
+    font-size: 20px;
+    font-weight: bold;
+  }
+  .nav-links {
+    display: flex;
+    gap: 12px;
+  }
+  .nav-links .nav-btn {
+    background: var(--btn-primary);
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: background .2s;
+  }
+  .nav-links .nav-btn:hover,
+  .nav-links .active {
+    background: #1b7bbf;
+  }
+  
+  /* -----------------------------------
+     FAQ CONTENT
+  ----------------------------------- */
+  .faq-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 16px;
+  }
+  .faq-container h1 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 24px;
+    color: var(--btn-primary);
+  }
+  
+  /* Accordion */
+  .accordion .item {
+    margin-bottom: 12px;
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--overlay-bg);
+    transition: background .3s;
+  }
+  .accordion .question {
+    width: 100%;
+    text-align: left;
+    padding: 16px;
+    font-size: 18px;
+    color: var(--text-main);
+    background: none;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+  .accordion .question:hover {
+    background: rgba(45,156,219,0.1);
+  }
+  .accordion .answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .4s ease;
+    padding: 0 16px;
+  }
+  .accordion .answer p {
+    padding: 12px 0;
+    color: var(--text-sub);
+  }
+  
+  /* -----------------------------------
+     FOOTER
+  ----------------------------------- */
+  footer {
+    text-align: center;
+    padding: 20px 0;
+    background: var(--nav-bg);
+  }
+  footer p {
+    color: var(--text-sub);
+    font-size: 14px;
+  }
+  
+  /* -----------------------------------
+     THEME TOGGLE (fixed bottom-right)
+  ----------------------------------- */
+  .theme-switch-wrapper {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-main);
+    font-size: 14px;
+    z-index: 1000;
+  }
+  .theme-switch {
+    position: relative; width:50px; height:24px;
+  }
+  .theme-switch input {
+    opacity:0; width:0; height:0;
+  }
+  .switch-slider {
+    position:absolute; top:0; left:0; right:0; bottom:0;
+    background:#ccc; border-radius:24px; transition:.4s;
+  }
+  .switch-slider::before {
+    content:""; position:absolute;
+    width:18px; height:18px; left:3px; bottom:3px;
+    background:#fff; border-radius:50%; transition:.4s;
+  }
+  .theme-switch input:checked + .switch-slider {
+    background:var(--btn-primary);
+  }
+  .theme-switch input:checked + .switch-slider::before {
+    transform:translateX(26px);
+  }
+  

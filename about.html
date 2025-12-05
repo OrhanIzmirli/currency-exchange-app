@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us – Global Exchange</title>
+  <link rel="stylesheet" href="about.css"/>
+  <script defer src="about.js"></script>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="main-nav">
+    <div class="nav-left">
+      <img src="images/logo.png" alt="Global Exchange Logo" class="nav-logo"/>
+      <span class="nav-title">GLOBAL EXCHANGE</span>
+    </div>
+      <nav class="nav-links">
+        <a href="#" onclick="navigateProtected('exchange.html')" class="btn nav-btn">Currency Exchange</a>
+        <a href="#" onclick="navigateProtected('payment.html')" class="btn nav-btn">Make a Payment</a>
+        <a id="btn-login" href="login.html" class="btn nav-btn">Log-In</a>
+        <a id="btn-signup" href="signup.html" class="btn nav-btn">Create Account</a>
+        <a id="btn-contact" href="contact.html" class="btn nav-btn">Contact</a>
+        <a id="btn-about" href="about.html" class="btn nav-btn">About</a>
+        <a id="btn-faq" href="faq.html" class="btn nav-btn">FAQ</a>
+        <a id="btn-profile" href="#" class="btn nav-btn">Profile</a>
+      </nav>
+
+  </header>
+
+  <!-- ABOUT CONTENT -->
+  <main class="about-container">
+    <div class="about-card">
+      <h1>About Global Exchange</h1>
+      <section>
+        <h2>Our Mission</h2>
+        <p>
+          At Global Exchange, our mission is to empower individuals and businesses with fast, secure, and
+          cost-effective international payment and currency conversion services.
+        </p>
+      </section>
+      <section>
+        <h2>Who We Are</h2>
+        <p>
+          Founded in 2020, Global Exchange has grown into a leading fintech platform serving customers in over 50
+          countries. Our team of experts works 24/7 to deliver you the best experience.
+        </p>
+      </section>
+      <section>
+        <h2>Why Choose Us</h2>
+        <ul>
+          <li><strong>Competitive Rates:</strong> Industry-low fees.</li>
+          <li><strong>Rapid Transfers:</strong> Instant where possible.</li>
+          <li><strong>24/7 Support:</strong> Always here for you.</li>
+          <li><strong>Secure Infrastructure:</strong> Bank-grade encryption.</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2025 Global Exchange. All rights reserved.</p>
+  </footer>
+
+  <!-- THEME TOGGLE -->
+  <div class="theme-switch-wrapper">
+    <label class="theme-switch" for="theme-checkbox">
+      <input type="checkbox" id="theme-checkbox"/>
+      <div class="switch-slider"></div>
+    </label>
+    <span id="mode-text">Dark</span>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const buttons = {
+        profile: document.getElementById('btn-profile'),
+        payment: document.getElementById('btn-payment'),
+        exchange: document.getElementById('btn-exchange')
+      };
+
+      Object.entries(buttons).forEach(([key, btn]) => {
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const token = localStorage.getItem('token');
+          if (!token) {
+            window.location.href = 'login.html';
+          } else {
+            window.location.href = `${key}.html`;
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

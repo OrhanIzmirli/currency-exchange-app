@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FAQ – Global Exchange</title>
+  <link rel="stylesheet" href="faq.css"/>
+  <script defer src="faq.js"></script>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="main-nav">
+    <div class="nav-left">
+      <img src="images/logo.png" alt="Global Exchange Logo" class="nav-logo"/>
+      <span class="nav-title">GLOBAL EXCHANGE</span>
+    </div>
+      <nav class="nav-links">
+        <a href="#" onclick="navigateProtected('exchange.html')" class="btn nav-btn">Currency Exchange</a>
+        <a href="#" onclick="navigateProtected('payment.html')" class="btn nav-btn">Make a Payment</a>
+        <a id="btn-login" href="login.html" class="btn nav-btn">Log-In</a>
+        <a id="btn-signup" href="signup.html" class="btn nav-btn">Create Account</a>
+        <a id="btn-contact" href="contact.html" class="btn nav-btn">Contact</a>
+        <a id="btn-about" href="about.html" class="btn nav-btn">About</a>
+        <a id="btn-faq" href="faq.html" class="btn nav-btn">FAQ</a>
+        <a id="btn-profile" href="#" class="btn nav-btn">Profile</a>
+      </nav>
+
+  </header>
+
+  <!-- FAQ Content -->
+  <main class="faq-container">
+    <h1>Frequently Asked Questions</h1>
+    <div class="accordion">
+      <div class="item">
+        <button class="question">
+          What is Global Exchange?
+          <span class="arrow">›</span>
+        </button>
+        <div class="answer">
+          <p>Global Exchange is your trusted partner for currency exchange and online payments, offering competitive rates and secure transactions.</p>
+        </div>
+      </div>
+      <div class="item">
+        <button class="question">
+          How do I sign up?
+          <span class="arrow">›</span>
+        </button>
+        <div class="answer">
+          <p>Click on Sign Up, fill out the form, agree to our Terms & Conditions, and you’re all set to start transacting.</p>
+        </div>
+      </div>
+      <div class="item">
+        <button class="question">
+          What currencies do you support?
+          <span class="arrow">›</span>
+        </button>
+        <div class="answer">
+          <p>We support major currencies including USD, EUR, PLN, GBP, and more. Check our live ticker for the full list.</p>
+        </div>
+      </div>
+      <div class="item">
+        <button class="question">
+          How long do transfers take?
+          <span class="arrow">›</span>
+        </button>
+        <div class="answer">
+          <p>Most transactions are instant. Some international transfers may take 1–2 business days.</p>
+        </div>
+      </div>
+      <div class="item">
+        <button class="question">
+          Is my data secure?
+          <span class="arrow">›</span>
+        </button>
+        <div class="answer">
+          <p>Yes, we use bank-grade encryption and secure infrastructure to protect your data and funds.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Global Exchange. All rights reserved.</p>
+  </footer>
+
+  <!-- Theme Toggle (fixed bottom-right) -->
+  <div class="theme-switch-wrapper">
+    <label class="theme-switch" for="theme-checkbox">
+      <input type="checkbox" id="theme-checkbox"/>
+      <div class="switch-slider"></div>
+    </label>
+    <span id="mode-text">Dark</span>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const buttons = {
+        profile: document.getElementById('btn-profile'),
+        payment: document.getElementById('btn-payment'),
+        exchange: document.getElementById('btn-exchange')
+      };
+
+      Object.entries(buttons).forEach(([key, btn]) => {
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const token = localStorage.getItem('token');
+          if (!token) {
+            window.location.href = 'login.html';
+          } else {
+            window.location.href = `${key}.html`;
+          }
+        });
+      });
+    });
+  </script>
+
+
+ <script>
+  function navigateProtected(path) {
+    const token = localStorage.getItem('token');
+    if (token) {
+      window.location.href = path;
+    } else {
+      alert('You must be logged in to access this page.');
+      window.location.href = 'login.html';
+    }
+  }
+ </script>
+</body>
+</html>
+

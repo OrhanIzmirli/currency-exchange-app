@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Account – Global Exchange</title>
+  <link rel="stylesheet" href="signup.css" />
+  <script defer src="signup.js"></script>
+</head>
+<body>
+  <!-- Tema Toggle -->
+  <div class="theme-switch-wrapper">
+    <label class="theme-switch" for="theme-checkbox">
+      <input type="checkbox" id="theme-checkbox" />
+      <div class="switch-slider"></div>
+    </label>
+    <span id="mode-text">Dark</span>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast"></div>
+
+  <div class="login-container">
+    <div class="login-card">
+      <!-- Logo -->
+      <div class="card-logo">
+        <img src="images/logo.png" alt="Global Exchange Logo">
+      </div>
+
+      <h2>Create Account</h2>
+      <p class="subtitle">Fill in the form to get started.</p>
+
+      <form id="signup-form" class="login-form" novalidate>
+        <!-- Username -->
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" placeholder="Username" required />
+          <div class="error" id="username-error"></div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="you@example.com" required />
+          <div class="error" id="email-error"></div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="password-wrapper">
+            <input type="password" id="password" placeholder="Password" required minlength="8" />
+            <button type="button" id="toggle-password" aria-label="Show password">Show</button>
+          </div>
+          <div class="error" id="password-error"></div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group">
+          <label for="confirm">Confirm Password</label>
+          <div class="password-wrapper">
+            <input type="password" id="confirm" placeholder="Confirm Password" required minlength="8" />
+            <button type="button" id="toggle-confirm" aria-label="Show password">Show</button>
+          </div>
+          <div class="error" id="confirm-error"></div>
+        </div>
+
+        <!-- Terms & Conditions -->
+        <div class="form-group">
+          <label class="terms">
+            <input type="checkbox" id="terms-checkbox" />
+            I agree to the <a href="#" id="terms-link">Terms &amp; Conditions</a>
+          </label>
+          <div class="error" id="terms-error"></div>
+        </div>
+
+        <!-- Newsletter -->
+        <div class="form-group">
+          <label class="newsletter">
+            <input type="checkbox" id="newsletter" />
+            Send me occasional news, updates and special offers.
+          </label>
+        </div>
+
+        <!-- Sign Up Button + Spinner -->
+        <button type="submit" class="btn primary" id="signup-btn">
+          <span class="btn-text">Sign Up</span>
+          <span class="spinner" id="spinner"></span>
+        </button>
+      </form>
+
+      <div class="divider"><span>or</span></div>
+
+      <!-- Social Signups -->
+      <div class="social-login">
+        <button class="btn fb">
+          <img src="images/facebook.png" alt="Facebook logo" />
+          Continue with Facebook
+        </button>
+        <button class="btn google">
+          <img src="images/google.png" alt="Google logo" />
+          Continue with Google
+        </button>
+      </div>
+
+      <p class="signup-link">
+        Already have an account? <a href="login.html">Log In</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Terms Modal -->
+  <div id="terms-modal">
+    <div class="modal-content">
+      <button class="close-modal">&times;</button>
+      <h3>Terms &amp; Conditions</h3>
+      <p>
+        This is a generic Terms &amp; Conditions placeholder. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+        Donec vehicula, nisl at commodo luctus, ligula neque sollicitudin orci, sed elementum nisi enim nec nulla. 
+        By using this service, you agree to abide by these terms.
+      </p>
+    </div>
+  </div>
+
+  <!-- 
+    [BACKEND ENTEGRASYONU]
+    Bu script kullanıcıdan alınan verileri backend'deki 
+    POST /api/auth/register endpoint'ine gönderir.
+    Başarılı kayıttan sonra login sayfasına yönlendirir.
+    Bağlantılı dosya: backend/controllers/authController.js
+  -->
+  <script>
+  document.getElementById('signup-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const username = document.getElementById('username').value;
+    const email    = document.getElementById('email').value; // ✅ Eklendi
+    const password = document.getElementById('password').value;
+    const confirm  = document.getElementById('confirm').value;
+
+    if (password !== confirm) {
+      alert('Passwords do not match');
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, email, password }) // ✅ Email de gönderiliyor
+      });
+
+      const data = await response.json();
+      alert(data.message);
+
+      if (response.ok) {
+        window.location.href = 'login.html';
+      }
+    } catch (err) {
+      alert('Registration failed');
+    }
+  });
+  </script>
+</body>
+</html>

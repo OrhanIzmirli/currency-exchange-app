@@ -1,0 +1,11 @@
+# Veritabanı dosyası Git'e eklenmesin
+database.sqlite
+
+# Node.js bağımlılıkları
+node_modules/
+
+# Ortam değişkenleri
+.env
+
+# SQLite veritabanı dosyası
+database.sqlite

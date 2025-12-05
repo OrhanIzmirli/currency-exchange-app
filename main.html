@@ -1,0 +1,145 @@
+<!-- 
+  [BACKEND ENTEGRASYONU] 
+  Bu HTML dosyası Express sunucusu (backend/app.js) üzerinden sunulmaktadır.
+  Sunucu: http://localhost:3000
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Global Exchange</title>
+  <link rel="stylesheet" href="main.css" />
+  <script defer src="main.js"></script>
+</head>
+<body>
+  <!-- Tema Toggle -->
+  <div class="theme-switch-wrapper">
+    <label class="theme-switch" for="theme-checkbox">
+      <input type="checkbox" id="theme-checkbox" />
+      <div class="switch-slider"></div>
+    </label>
+    <span id="mode-text">Dark</span>
+  </div>
+
+  <div class="container">
+    <header>
+      <div class="logo">
+        <img src="images/logo.png" alt="Global Exchange Logo" />
+        <span>GLOBAL EXCHANGE</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#" onclick="navigateProtected('exchange.html')" class="btn nav-btn">Currency Exchange</a>
+        <a href="#" onclick="navigateProtected('payment.html')" class="btn nav-btn">Make a Payment</a>
+        <a id="btn-login" href="login.html" class="btn nav-btn">Log-In</a>
+        <a id="btn-signup" href="signup.html" class="btn nav-btn">Create Account</a>
+        <a id="btn-contact" href="contact.html" class="btn nav-btn">Contact</a>
+        <a id="btn-about" href="about.html" class="btn nav-btn">About</a>
+        <a id="btn-faq" href="faq.html" class="btn nav-btn">FAQ</a>
+        <a id="btn-profile" href="#" class="btn nav-btn">Profile</a>
+      </nav>
+    </header>
+
+    <!-- Canlı Kur Ticker -->
+    <div id="ticker">
+      <div class="ticker-items">Loading rates…</div>
+    </div>
+
+    <main>
+      <div class="slider-section">
+        <!-- Slider + Oklar + Dots -->
+        <div class="slider-container">
+          <div class="slider-wrapper">
+            <button class="prev-btn" onclick="prevSlide()">‹</button>
+            <div class="slider">
+              <div class="slides" id="slider-track">
+                <div class="slide">
+                  <h1>Currency Exchange</h1>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+                </div>
+                <div class="slide">
+                  <h1>Make a Payment</h1>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+                </div>
+              </div>
+            </div>
+            <button class="next-btn" onclick="nextSlide()">›</button>
+          </div>
+          <div class="dots">
+            <span class="dot active" onclick="setSlide(0)"></span>
+            <span class="dot" onclick="setSlide(1)"></span>
+          </div>
+        </div>
+
+        <!-- Yan Görsel -->
+        <div class="image-box">
+          <img id="dynamic-image" src="images/main.png" alt="Slide Visual" />
+        </div>
+      </div>
+
+      <!-- Hizmetler / Özellikler Bölümü -->
+      <section class="features">
+        <h2>Why Choose Us?</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="icon">💱</div>
+            <h3>Best Rates</h3>
+            <p>We offer competitive exchange rates with minimal fees.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon">⚡</div>
+            <h3>Fast Transactions</h3>
+            <p>Instant transfers so your money moves when you need it.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon">📞</div>
+            <h3>24/7 Support</h3>
+            <p>Our team is available around the clock for any assistance.</p>
+          </div>
+          <div class="feature-card">
+            <div class="icon">🔒</div>
+            <h3>Secure Infrastructure</h3>
+            <p>Bank-grade security to keep your funds and data safe.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Giriş Kontrol Kodları -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const buttons = {
+        profile: document.getElementById('btn-profile'),
+        payment: document.getElementById('btn-payment'),
+        exchange: document.getElementById('btn-exchange')
+      };
+
+      Object.entries(buttons).forEach(([key, btn]) => {
+        if (!btn) return;
+        btn.addEventListener('click', (e) => {
+          e.preventDefault(); // href'in çalışmasını engelle
+          const token = localStorage.getItem('token');
+          if (!token) {
+            window.location.href = 'login.html';
+          } else {
+            window.location.href = `${key}.html`;
+          }
+        });
+      });
+    });
+  </script>
+
+  <script>
+  function navigateProtected(path) {
+    const token = localStorage.getItem('token');
+    if (token) {
+      window.location.href = path;
+    } else {
+      alert('You must be logged in to access this page.');
+      window.location.href = 'login.html';
+    }
+  }
+  </script>
+</body>
+</html>
