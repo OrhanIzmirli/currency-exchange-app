@@ -23,6 +23,10 @@ SQLite (Sequelize ORM)
 **Authentication:**  
 JWT, Bcrypt  
 
+## Screenshots
+
+![Main Page](screenshots/main_ss.jpg)
+
 ## Installation
 
 ```bash
