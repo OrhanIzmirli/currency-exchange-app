@@ -2,6 +2,11 @@
 
 Full-stack Currency Exchange Application with Authentication, API Integration and Payment System.
 
+## Project Purpose
+This project was built to demonstrate full-stack development skills including authentication, API integration, database management, and secure user handling.
+
+It is suitable as a junior-level portfolio project.
+
 ## Features
 - User Registration & Login (JWT Authentication)
 - Password Hashing with Bcrypt
