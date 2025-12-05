@@ -30,3 +30,20 @@ git clone https://github.com/OrhanIzmirli/currency-exchange-app.git
 cd currency-exchange-app/backend
 npm install
 npm start
+---
+
+## API Endpoints
+
+POST /api/auth/register  
+POST /api/auth/login  
+GET /api/user/profile  
+GET /api/exchange/rates  
+
+---
+
+## Author
+
+Orhan Izmirli  
+Computer Science Student – Warsaw, Poland  
+LinkedIn: https://www.linkedin.com/in/orhan-izmirli-689441307/
+
